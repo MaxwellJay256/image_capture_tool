@@ -41,7 +41,7 @@ class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
         self.save_dir_default = os.path.join(os.path.expanduser("~"), "Pictures")
 
         self.updatePeriod = 10 # ms
-        self.photo_count = 0
+        self.updateFileName()
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.timerUpdateEvent)
