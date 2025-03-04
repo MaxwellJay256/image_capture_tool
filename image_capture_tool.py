@@ -7,7 +7,7 @@ os.environ.update({"QT_QPA_PLATFORM_PLUGIN_PATH": \
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from PyQt5.QtWidgets import QApplication, QWidget, QShortcut
-from PyQt5.QtCore import QDateTime, QTimer, Qt
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QImage, QPixmap, QKeySequence
 from Ui_image_capture_tool import Ui_ImageCaptureTool
 from qfluentwidgets import *
@@ -27,6 +27,8 @@ class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
         
         # Connect signals and slots
         self.lineEdit_tag.textChanged.connect(self.updateFileName)
+        self.spinBox_FileNumber.valueChanged.connect(self.updateFileName)
+        self.pushButton_Reset.clicked.connect(self.resetFileNumber)
         self.button_capture.clicked.connect(self.saveImage)
         self.button_exit.clicked.connect(self.exit)
 
@@ -47,11 +49,6 @@ class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
 
 
     def timerUpdateEvent(self):
-        # update current time
-        now = QDateTime.currentDateTime()
-        self.dateTime = now.toString('yyyyMMdd_hhmmss')
-        self.updateFileName()
-
         # Capture image from camera and display
         ret, frame = self.cap.read()
         if not ret:
@@ -72,8 +69,12 @@ class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
 
 
     def updateFileName(self):
-        self.fileName = self.lineEdit_tag.text() + '_' + self.dateTime + '.jpg'
+        self.fileName = self.lineEdit_tag.text() + '_' + str(self.spinBox_FileNumber.value()) + '.jpg'
         self.lineEdit_preview.setText(self.fileName)
+
+
+    def resetFileNumber(self):
+        self.spinBox_FileNumber.setValue(1)
 
 
     def saveImage(self):
@@ -89,6 +90,8 @@ class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
         self.imageAbsolutePath = os.path.join(self.save_dir, self.fileName)
         cv2.imwrite(self.imageAbsolutePath, frame)
         print(f"Image saved: {self.imageAbsolutePath}")
+
+        self.spinBox_FileNumber.setValue(self.spinBox_FileNumber.value() + 1)  # Increment file number
 
 
     def exit(self):
