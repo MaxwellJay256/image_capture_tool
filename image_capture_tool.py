@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QShortcut
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QImage, QPixmap, QKeySequence
 from Ui_image_capture_tool import Ui_ImageCaptureTool
-from qfluentwidgets import *
+from qfluentwidgets import setThemeColor
 
 class ImageCaptureTool(QWidget, Ui_ImageCaptureTool):
     def __init__(self):

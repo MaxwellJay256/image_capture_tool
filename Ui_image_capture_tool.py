@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ImageCaptureTool(object):
     def setupUi(self, ImageCaptureTool):
         ImageCaptureTool.setObjectName("ImageCaptureTool")
-        ImageCaptureTool.resize(1280, 700)
+        ImageCaptureTool.resize(960, 600)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(ImageCaptureTool)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.groupBox_camera = QtWidgets.QGroupBox(ImageCaptureTool)
